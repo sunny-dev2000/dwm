@@ -1,19 +1,5 @@
 /* See LICENSE file for copyright and license details. */
 #include <X11/XF86keysym.h>
-/* SOUND */
-static const char *upvol[] = {"amixer", "-D", "pulse", "sset", "Master", "2%+", NULL };
-static const char *downvol[] = {"amixer", "-D", "pulse", "sset", "Master", "3%-", NULL };
-/* toggle Mute */
-static const char *mute[] = {"pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };
-/*	PLAY, NEXT, PREVIOUS	*/
-static const char *cmusplay[]    = { "cmus-remote", "-u", NULL };
-static const char *cmusnext[]    = { "cmus-remote", "-n", NULL };
-static const char *cmusprev[]    = { "cmus-remote", "-r", NULL };
-/* light */
-static const char *lightup[] = {"/usr/bin/light", "-A", "5", NULL };
-static const char *lightdown[] = {"/usr/bin/light", "-U", "5", NULL };
-/* Lock Session with dm-tool */
-static const char *locksession[] = {"dm-tool", "lock",  NULL };
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -55,8 +41,13 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	/*{ "Gimp",     NULL,       NULL,       0,            1,          -1 },*/
+  { "zen",      NULL,       NULL,       1 << 0,       0,          -1 },
+  { "obsidian", NULL,       NULL,       1 << 2,       0,          -1 },
+  { "Blender",  NULL,       NULL,       1 << 7,       0,          -1 },
+  { "gimp",     NULL,       NULL,       1 << 5,       1,          -1 },
+  { "inkscape", NULL,       NULL,       1 << 5,       0,          -1 },
+  { "anydesk",  NULL,       NULL,       1 << 7,       0,          -1 },
 };
 
 /* layout(s) */
@@ -104,6 +95,18 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "100x22", NULL };
+static const char *upvol[] = {"amixer", "-D", "pulse", "sset", "Master", "2%+", NULL };            /* volume up  -  media keys*/
+static const char *downvol[] = {"amixer", "-D", "pulse", "sset", "Master", "3%-", NULL };          /* volume down  -  media keys*/
+static const char *mute[] = {"pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };         /* mute toggle  -  media keys*/
+static const char *cmusplay[]    = { "cmus-remote", "-u", NULL };                                  /* play  -  media keys*/
+static const char *cmusnext[]    = { "cmus-remote", "-n", NULL };                                  /* next  -  media keys*/
+static const char *cmusprev[]    = { "cmus-remote", "-r", NULL };                                  /* previous  -  media keys*/
+static const char *lightup[] = {"/usr/bin/light", "-A", "5", NULL };                               /* brightnessup */
+static const char *lightdown[] = {"/usr/bin/light", "-U", "5", NULL };                             /* brightnessdown */
+static const char *locksession[] = {"dm-tool", "lock",  NULL };                                    /* Lock Session with dm-tool */
+static const char *sscmd[] = { "scrot", "/home/sunny/Pictures/ss/ss-%d-%m-%Y-%H%M%S.jpg", NULL };  /* screenshots */
+static const char *zenBrowser[]  = { "/usr/local/bin/zen", NULL };
+static const char *obsidianNotes[]  = { "obsidian", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -168,12 +171,12 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_m, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_m, tagmon,         {.i = +1 } },
-	/*  LOCK SESSION		  LOCK SESSION		  LLOCK SESSION		OCK SESSION		 */
-  { MODKEY,                       XK_l,spawn,                {.v = locksession} },
-  /* rofi  */
-  { MODKEY,                       XK_c,      spawn,  SHCMD("rofi -show drun") },
-  /* rofimoji for emojis  */
-  { MODKEY,                       XK_period, spawn,  SHCMD("rofimoji --action type") },
+  { MODKEY,                       XK_l,spawn,                {.v = locksession} },      /* Lock Session with dm-tool */
+  { MODKEY,                       XK_c,      spawn,  SHCMD("rofi -show drun") },        /* rofi */
+  { MODKEY,                       XK_period, spawn,  SHCMD("rofimoji --action type") }, /* rofimoji for emojis*/
+  { MODKEY,                       XK_w,      spawn,          {.v = zenBrowser } },
+  { MODKEY,                       XK_o,      spawn,          {.v = obsidianNotes } },
+  { 0,                            XK_Print,  spawn,          {.v = sscmd } },
   /* SOUND */
   { 0,           XF86XK_AudioRaiseVolume,    spawn,          {.v = upvol} },
   { 0,           XF86XK_AudioLowerVolume,    spawn,          {.v = downvol} },
