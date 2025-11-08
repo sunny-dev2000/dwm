@@ -44,6 +44,7 @@ static const Rule rules[] = {
 	/*{ "Gimp",     NULL,       NULL,       0,            1,          -1 },*/
   { "zen",      NULL,       NULL,       1 << 0,       0,          -1 },
   { "obsidian", NULL,       NULL,       1 << 2,       0,          -1 },
+  { "okular",   NULL,       NULL,       1 << 2,       0,          -1 },
   { "Blender",  NULL,       NULL,       1 << 7,       0,          -1 },
   { "gimp",     NULL,       NULL,       1 << 5,       1,          -1 },
   { "inkscape", NULL,       NULL,       1 << 5,       0,          -1 },
