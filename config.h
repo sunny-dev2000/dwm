@@ -1,4 +1,19 @@
 /* See LICENSE file for copyright and license details. */
+#include <X11/XF86keysym.h>
+/* SOUND */
+static const char *upvol[] = {"amixer", "-D", "pulse", "sset", "Master", "2%+", NULL };
+static const char *downvol[] = {"amixer", "-D", "pulse", "sset", "Master", "3%-", NULL };
+/* toggle Mute */
+static const char *mute[] = {"pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };
+/*	PLAY, NEXT, PREVIOUS	*/
+static const char *cmusplay[]    = { "cmus-remote", "-u", NULL };
+static const char *cmusnext[]    = { "cmus-remote", "-n", NULL };
+static const char *cmusprev[]    = { "cmus-remote", "-r", NULL };
+/* light */
+static const char *lightup[] = {"/usr/bin/light", "-A", "5", NULL };
+static const char *lightdown[] = {"/usr/bin/light", "-U", "5", NULL };
+/* Lock Session with dm-tool */
+static const char *locksession[] = {"dm-tool", "lock",  NULL };
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -88,7 +103,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "100x22", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -126,7 +141,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[4]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[2]} },
 	/*{ MODKEY,                       XK_space,  setlayout,      {0} },*/
 	{ MODKEY          ,             XK_space,  togglefloating,    {0} },
 	{ MODKEY|ShiftMask,             XK_t,  togglealwaysontop, {0} },
@@ -150,9 +165,26 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
+	{ MODKEY,                       XK_m, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_m, tagmon,         {.i = +1 } },
+	/*  LOCK SESSION		  LOCK SESSION		  LLOCK SESSION		OCK SESSION		 */
+  { MODKEY,                       XK_l,spawn,                {.v = locksession} },
+  /* rofi  */
+  { MODKEY,                       XK_c,      spawn,  SHCMD("rofi -show drun") },
+  /* rofimoji for emojis  */
+  { MODKEY,                       XK_period, spawn,  SHCMD("rofimoji --action type") },
+  /* SOUND */
+  { 0,           XF86XK_AudioRaiseVolume,    spawn,          {.v = upvol} },
+  { 0,           XF86XK_AudioLowerVolume,    spawn,          {.v = downvol} },
+  { 0,           XF86XK_AudioMute,           spawn,          {.v = mute} },
+	/* Keybindings for Media play/pause/next/previous */
+  { 0,           XF86XK_AudioPlay,           spawn,          {.v = cmusplay } },
+  { 0,           XF86XK_AudioNext,           spawn,          {.v = cmusnext } },
+  { 0,           XF86XK_AudioPrev,           spawn,          {.v = cmusprev } },
+	/*	backlight KEYS		backlight KEYS		backlight KEYS		 backlight KEYS */
+  { 0,           XF86XK_MonBrightnessUp,     spawn,          {.v = lightup} },
+  { 0,           XF86XK_MonBrightnessDown,   spawn,          {.v = lightdown} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
