@@ -169,10 +169,10 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_m, focusmon,       {.i = +1 } },
+	{ MODKEY,                       XK_m,      focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_m, tagmon,         {.i = +1 } },
-  { MODKEY,                       XK_l,spawn,                {.v = locksession} },      /* Lock Session with dm-tool */
+	{ MODKEY|ShiftMask,             XK_m,      tagmon,         {.i = +1 } },
+  { MODKEY,|ControlMask|ShiftMask,XK_l,      spawn,          {.v = locksession} },      /* Lock Session with dm-tool */
   { MODKEY,                       XK_c,      spawn,  SHCMD("rofi -show drun") },        /* rofi */
   { MODKEY,                       XK_period, spawn,  SHCMD("rofimoji --action type") }, /* rofimoji for emojis*/
   { MODKEY,                       XK_w,      spawn,          {.v = zenBrowser } },
