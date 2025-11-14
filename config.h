@@ -13,9 +13,9 @@ static const int scalepreview       = 4;        /* preview scaling (display w an
 static const int previewbar         = 1;        /* show the bar in the preview window */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappiv    = 15;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 20;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 20;       /* vert outer gap between windows and screen edge */
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -40,15 +40,19 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	/*{ "Gimp",     NULL,       NULL,       0,            1,          -1 },*/
-  { "zen",      NULL,       NULL,       1 << 0,       0,          -1 },
-  { "obsidian", NULL,       NULL,       1 << 2,       0,          -1 },
-  { "okular",   NULL,       NULL,       1 << 2,       0,          -1 },
-  { "Blender",  NULL,       NULL,       1 << 7,       0,          -1 },
-  { "gimp",     NULL,       NULL,       1 << 5,       1,          -1 },
-  { "inkscape", NULL,       NULL,       1 << 5,       0,          -1 },
-  { "anydesk",  NULL,       NULL,       1 << 7,       0,          -1 },
+	/* class              instance    title       tags mask     isfloating   monitor */
+	/*{ "Gimp",             NULL,       NULL,       0,            1,          -1 },*/
+  { "zen",              NULL,       NULL,       1 << 0,       0,          -1 },
+  { "obsidian",         NULL,       NULL,       1 << 2,       0,          -1 },
+  { "okular",           NULL,       NULL,       1 << 2,       0,          -1 },
+  { "WasIstLos",        NULL,       NULL,       1 << 4,       0,          -1 },
+  { "Telegram",        NULL,       NULL,       1 << 4,       0,          -1 },
+  { "Signal",   NULL,       NULL,       1 << 4,       0,          -1 },
+  { "Discord",   NULL,       NULL,       1 << 4,       0,          -1 },
+  { "Blender",          NULL,       NULL,       1 << 6,       0,          -1 },
+  { "gimp",             NULL,       NULL,       1 << 5,       1,          -1 },
+  { "Inkscape",         NULL,       NULL,       1 << 5,       0,          -1 },
+  { "anydesk",          NULL,       NULL,       1 << 7,       0,          -1 },
 };
 
 /* layout(s) */
@@ -96,18 +100,23 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "100x22", NULL };
-static const char *upvol[] = {"amixer", "-D", "pulse", "sset", "Master", "2%+", NULL };            /* volume up  -  media keys*/
-static const char *downvol[] = {"amixer", "-D", "pulse", "sset", "Master", "3%-", NULL };          /* volume down  -  media keys*/
+/*
+static const char *upvol[]   = {"pactl", "set-volume", "@DEFAULT_SINK@", "+2%", NULL};
+static const char *downvol[] = {"pactl", "set-volume", "@DEFAULT_SINK@", "-3%", NULL};
+*/
 static const char *mute[] = {"pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };         /* mute toggle  -  media keys*/
 static const char *cmusplay[]    = { "cmus-remote", "-u", NULL };                                  /* play  -  media keys*/
 static const char *cmusnext[]    = { "cmus-remote", "-n", NULL };                                  /* next  -  media keys*/
 static const char *cmusprev[]    = { "cmus-remote", "-r", NULL };                                  /* previous  -  media keys*/
-static const char *lightup[] = {"/usr/bin/light", "-A", "5", NULL };                               /* brightnessup */
-static const char *lightdown[] = {"/usr/bin/light", "-U", "5", NULL };                             /* brightnessdown */
+/*
+static const char *lightup[] = {"/usr/bin/light", "-A", "5", NULL };                                brightnessup 
+static const char *lightdown[] = {"/usr/bin/light", "-U", "5", NULL };                              brightnessdown 
+*/
 static const char *locksession[] = {"dm-tool", "lock",  NULL };                                    /* Lock Session with dm-tool */
 static const char *sscmd[] = { "scrot", "/home/sunny/Pictures/ss/ss-%d-%m-%Y-%H%M%S.jpg", NULL };  /* screenshots */
-static const char *zenBrowser[]  = { "/usr/local/bin/zen", NULL };
+static const char *zenBrowser[]  = { "/usr/bin/zen-browser", NULL };
 static const char *obsidianNotes[]  = { "obsidian", NULL };
+static const char *fileManager[]  = { "thunar", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -177,18 +186,25 @@ static const Key keys[] = {
   { MODKEY,                       XK_period, spawn,  SHCMD("rofimoji --action type") }, /* rofimoji for emojis*/
   { MODKEY,                       XK_w,      spawn,          {.v = zenBrowser } },
   { MODKEY,                       XK_o,      spawn,          {.v = obsidianNotes } },
+  { MODKEY,                       XK_e,      spawn,          {.v = fileManager } },
   { 0,                            XK_Print,  spawn,          {.v = sscmd } },
-  /* SOUND */
+  /* SOUND
   { 0,           XF86XK_AudioRaiseVolume,    spawn,          {.v = upvol} },
   { 0,           XF86XK_AudioLowerVolume,    spawn,          {.v = downvol} },
+ */
+  { 0,           XF86XK_AudioLowerVolume,   spawn, SHCMD("pamixer --decrease 3") },
+  { 0,           XF86XK_AudioRaiseVolume,   spawn, SHCMD("pamixer --increase 2") },
   { 0,           XF86XK_AudioMute,           spawn,          {.v = mute} },
 	/* Keybindings for Media play/pause/next/previous */
   { 0,           XF86XK_AudioPlay,           spawn,          {.v = cmusplay } },
   { 0,           XF86XK_AudioNext,           spawn,          {.v = cmusnext } },
   { 0,           XF86XK_AudioPrev,           spawn,          {.v = cmusprev } },
-	/*	backlight KEYS		backlight KEYS		backlight KEYS		 backlight KEYS */
+	/*	backlight KEYS		backlight KEYS		backlight KEYS		 backlight KEYS 
   { 0,           XF86XK_MonBrightnessUp,     spawn,          {.v = lightup} },
   { 0,           XF86XK_MonBrightnessDown,   spawn,          {.v = lightdown} },
+*/
+  { 0, XF86XK_MonBrightnessUp,   spawn, SHCMD("brightnessctl set +10%") },
+{ 0, XF86XK_MonBrightnessDown, spawn, SHCMD("brightnessctl set 10%-") },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
