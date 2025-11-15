@@ -5,8 +5,8 @@
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
-static const unsigned int systrayonleft = 0;    /* 0: systray in the right corner, >0: systray on left of status text */
-static const unsigned int systrayspacing = 2;   /* systray spacing */
+static const unsigned int systrayonleft = 1;    /* 0: systray in the right corner, >0: systray on left of status text */
+static const unsigned int systrayspacing = 0;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;        /* 0 means no systray */
 static const int scalepreview       = 4;        /* preview scaling (display w and h / scalepreview) */
@@ -33,26 +33,29 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "🌐", "✨", "📖", "🎶", "💬", "🎨", "💀", "⚙️", "🔥" };
+static const char *tags[] = { "🌐", "✨", "📖", "🎶", "💬", "🎨", "🏡", "💀", "🔥" };
 
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class              instance    title       tags mask     isfloating   monitor */
-	/*{ "Gimp",             NULL,       NULL,       0,            1,          -1 },*/
-  { "zen",              NULL,       NULL,       1 << 0,       0,          -1 },
-  { "obsidian",         NULL,       NULL,       1 << 2,       0,          -1 },
-  { "okular",           NULL,       NULL,       1 << 2,       0,          -1 },
-  { "WasIstLos",        NULL,       NULL,       1 << 4,       0,          -1 },
-  { "Telegram",        NULL,       NULL,       1 << 4,       0,          -1 },
-  { "Signal",   NULL,       NULL,       1 << 4,       0,          -1 },
-  { "Discord",   NULL,       NULL,       1 << 4,       0,          -1 },
-  { "Blender",          NULL,       NULL,       1 << 6,       0,          -1 },
-  { "gimp",             NULL,       NULL,       1 << 5,       1,          -1 },
-  { "Inkscape",         NULL,       NULL,       1 << 5,       0,          -1 },
-  { "anydesk",          NULL,       NULL,       1 << 7,       0,          -1 },
+	/* class               instance    title       tags mask     isfloating   monitor */
+	/*{ "Gimp",              NULL,       NULL,       0,            1,          -1 },*/
+  { "zen",                 NULL,       NULL,       1 << 0,       0,          -1 },
+  { "St",                  NULL,       NULL,       1 << 1,       0,          -1 },
+  { "obsidian",            NULL,       NULL,       1 << 2,       0,          -1 },
+  { "okular",              NULL,       NULL,       1 << 2,       0,          -1 },
+  { "Wasistlos",           NULL,       NULL,       1 << 4,       0,          -1 },
+  { "Telegram",            NULL,       NULL,       1 << 4,       0,          -1 },
+  { "Signal",              NULL,       NULL,       1 << 4,       0,          -1 },
+  { "discord",             NULL,       NULL,       1 << 4,       0,          -1 },
+  { "Gimp",                NULL,       NULL,       1 << 5,       1,          -1 },
+  { "Inkscape",            NULL,       NULL,       1 << 5,       0,          -1 },
+  { "Blender",             NULL,       NULL,       1 << 5,       0,          -1 },
+  { "anydesk",             NULL,       NULL,       1 << 6,       0,          -1 },
+  { "Thunar",              NULL,       NULL,       1 << 6,       0,          -1 },
+  { "keepassxc",              NULL,       NULL,       1 << 7,       0,          -1 },
 };
 
 /* layout(s) */
