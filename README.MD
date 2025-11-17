@@ -14,6 +14,7 @@ My own build of dwm
 - tag previews 
 - systray 
 - status2d 
+- viewontag
 
 
 dwm - dynamic window manager
