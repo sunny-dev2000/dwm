@@ -14,12 +14,12 @@ static const int previewbar         = 1;        /* show the bar in the preview w
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 15;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 20;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 20;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappoh    = 40;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 40;       /* vert outer gap between windows and screen edge */
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=13", "NotoColorEmoji:pixelsize=13:antialias=true:autohint=true", "monospace:size=13" };
+static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=13", "JoyPixels:pixelsize=13:antialias=true:autohint=true", "FlagsFont:size=13" };
 static const char dmenufont[]       = "NotoColorEmoji:size=13" ;
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -55,7 +55,10 @@ static const Rule rules[] = {
   { "Blender",             NULL,       NULL,       1 << 5,       0,          -1 },
   { "anydesk",             NULL,       NULL,       1 << 6,       0,          -1 },
   { "Thunar",              NULL,       NULL,       1 << 6,       0,          -1 },
-  { "keepassxc",              NULL,       NULL,       1 << 7,       0,          -1 },
+  { "calibre",             NULL,       NULL,       1 << 6,       0,          -1 },
+  { "FreeTube",            NULL,       NULL,       1 << 6,       0,          -1 },
+  { "KeePassXC",           NULL,       NULL,       1 << 7,       0,          -1 },
+  { "Tor Browser",         NULL,       NULL,       1 << 7,       0,          -1 },
 };
 
 /* layout(s) */
