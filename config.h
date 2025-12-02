@@ -26,7 +26,7 @@ static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static const char col_cyan[]        = "#146037";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -44,6 +44,7 @@ static const Rule rules[] = {
 	/* class               instance    title       tags mask     isfloating   monitor */
 	/*{ "Gimp",              NULL,       NULL,       0,            1,          -1 },*/
   { "zen",                 NULL,       NULL,       1 << 0,       0,          -1 },
+  { "qutebrowser",         NULL,       NULL,       1 << 0,       0,          -1 },
   { "St",                  NULL,       NULL,       1 << 1,       0,          -1 },
   { "obsidian",            NULL,       NULL,       1 << 2,       0,          -1 },
   { "okular",              NULL,       NULL,       1 << 2,       0,          -1 },
@@ -60,6 +61,7 @@ static const Rule rules[] = {
   { "FreeTube",            NULL,       NULL,       1 << 6,       0,          -1 },
   { "KeePassXC",           NULL,       NULL,       1 << 7,       0,          -1 },
   { "Tor Browser",         NULL,       NULL,       1 << 7,       0,          -1 },
+  { "Portmaster",          NULL,       NULL,       1 << 7,       0,          -1 },
 };
 
 /* layout(s) */
@@ -122,6 +124,8 @@ static const char *lightdown[] = {"/usr/bin/light", "-U", "5", NULL };          
 static const char *locksession[] = {"dm-tool", "lock",  NULL };                                    /* Lock Session with dm-tool */
 static const char *sscmd[] = { "scrot", "/home/sunny/Pictures/ss/ss-%d-%m-%Y-%H%M%S.jpg", NULL };  /* screenshots */
 static const char *zenBrowser[]  = { "/usr/bin/zen-browser", NULL };
+static const char *quteBrowser[]  = { "/usr/bin/qutebrowser", NULL };
+static const char *aiBrowser[]  = { "/usr/local/bin/ai-LLM.sh", NULL };
 static const char *obsidianNotes[]  = { "obsidian", NULL };
 static const char *fileManager[]  = { "thunar", NULL };
 
@@ -161,7 +165,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[4]} },
-	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[2]} },
+	/*{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[2]} },*/
 	/*{ MODKEY,                       XK_space,  setlayout,      {0} },*/
 	{ MODKEY          ,             XK_space,  togglefloating,    {0} },
 	{ MODKEY|ShiftMask,             XK_t,  togglealwaysontop, {0} },
@@ -189,9 +193,11 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_m,      tagmon,         {.i = +1 } },
   { MODKEY|ControlMask|ShiftMask, XK_l,      spawn,          {.v = locksession} },      /* Lock Session with dm-tool */
-  { MODKEY,                       XK_c,      spawn,  SHCMD("rofi -show drun") },        /* rofi */
-  { MODKEY,                       XK_period, spawn,  SHCMD("rofimoji --action type") }, /* rofimoji for emojis*/
+  { MODKEY,                       XK_r,      spawn,  SHCMD("rofi -show drun") },        /* rofi */
+  { MODKEY,                       XK_period, spawn,  SHCMD("rofimoji --use-icons --hidden-descriptions --selector-args='-theme ~/.config/rofimoji/grid.rasi' --action type") }, /* rofimoji for emojis*/
   { MODKEY,                       XK_w,      spawn,          {.v = zenBrowser } },
+  { MODKEY,                       XK_q,      spawn,          {.v = quteBrowser } },
+  { MODKEY,                       XK_a,      spawn,          {.v = aiBrowser } },
   { MODKEY,                       XK_o,      spawn,          {.v = obsidianNotes } },
   { MODKEY,                       XK_e,      spawn,          {.v = fileManager } },
   { 0,                            XK_Print,  spawn,          {.v = sscmd } },
